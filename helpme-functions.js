@@ -33,7 +33,7 @@ function checkGen(data, genFields) {
 //////////////   Cross-Check all fields/Combine ///////
 //////////////////////////////////////////////////////
 
-function checkAll(data, checkGen, checkReq) {
+function checkAll(data, reqFields, genFields) {
   var reqErr = checkReq(data, reqFields)
   var genErr = checkGen(data, genFields)
   return reqErr.concat(genErr)
