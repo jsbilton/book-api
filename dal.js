@@ -16,7 +16,7 @@ function getDBInfo() {
 }
 
 function createView(designDoc, cb) {
-  db.put(designDoc, helper.cbDAL(cb))
+  db.put(designDoc, helper.cbDB(cb))
 }
 
 ///////////////////////////////////////////////////////
@@ -57,6 +57,7 @@ function getBookById(id, cb) {
   if (!id || !id.length || typeof id !== 'string') {
     return cb(new Error('GET BOOK ERROR:\n_id NOT STRING'))
   }
+  db.get(id, cbDB(cb))
 }
 
 ///////////////////////////////////////////////////////
@@ -71,6 +72,7 @@ function listBooks(sortBy, startKey, limit, cb) {
     return cb(new Error('Missing limit parameters:\nProvide limit'))
   }
   limit = startKey !== '' ? ++limit : limit
+
   db.query(sortBy, {
     startKey: startKey,
     limit: limit,
