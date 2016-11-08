@@ -12,15 +12,16 @@ const helper = require('./helpme-functions.js')
 //////////////////////////////////////////////////////
 
 function reqObject (req) {
-    return {
-      method: req.method,
-      path: req.path,
-      query: req.query
-    }
+  return {
+    method: req.method,
+    path: req.path,
+    query: req.query
+  }
 }
 ///////////////////////////////////////////////////////
 //////////////////   Home          ///////////////////
 //////////////////////////////////////////////////////
+
 app.get('/', function (req, res) {
   res.send('My Book API')
 })
@@ -28,6 +29,7 @@ app.get('/', function (req, res) {
 ///////////////////////////////////////////////////////
 //////////////////   Retrieve Book: GET  //////////////
 //////////////////////////////////////////////////////
+
 app.get('/books/:id', function (req, res, next) {
   const bookId = req.params.id
   dal.getBookById(bookId, helper.cbDAL(req, res, next) )
@@ -45,27 +47,44 @@ app.get('/books', function (req, res, next) {
   dal.listBooks(sortBy, startKey, limit, helper.cbDAL(req, res, next))
 })
 
-
 ///////////////////////////////////////////////////////
 //////////////////   Add Book: POST ///////////////////
 //////////////////////////////////////////////////////
+
 app.post('/books', jsonParser, function (req, res, next) {
   if (!req.body)
-  return next (new HTTPError(400, 'POST BODY is MIA!'), reqObject(req))
+  return next(new HTTPError(400, 'POST BODY is MIA!'), reqObject(req))
   dal.createBook(req.body, helper.cbDAL(req, res, next))
+})
+
+
+///////////////////////////////////////////////////////
+//////////////////   Error Handler    /////////////////
+//////////////////////////////////////////////////////
+
+app.get('*', function (req, res) {
+  var body = '<h1>404 Page Not Found </h1>'
+  body += '<ul>'
+  body += '<li>METHOD: ' + req.method + '</li>'
+  body += '<li>PATH: ' + req.path + '</li>'
+  body += '<li>QUERY: '+ JSON.stringify(req.query, null, 4) + '</li>'
+  body += '</ul>'
+  res.send(body)
 })
 
 ///////////////////////////////////////////////////////
 //////////////////   Middleware  /////////////////////
 //////////////////////////////////////////////////////
-app.use(function(err, req, res, next) {
-    console.log(err)
-    res.status(err.status || 500).send(err)
+
+app.use(function (err, req, res, next) {
+  console.log(err)
+  res.status(err.status || 500).send(err)
 })
 
 ///////////////////////////////////////////////////////
 //////////////////   Port /////////////////////
 //////////////////////////////////////////////////////
+
 app.listen(port, function () {
   console.log('Listening on port: ', port)
 })
