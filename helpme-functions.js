@@ -7,9 +7,9 @@ const HTTPError = require('node-http-error')
 function checkReq(data, reqFields) {
   var inputErr = []
   //iterate thru input fields
-  reqFields.forEach(function (reqFields) {
-    if (reqFields.hasOwnProperty(reqFields) !== true) {
-      inputErr.push('Missing required properties' + reqFields)
+  reqFields.forEach(function (reqField) {
+    if (data.hasOwnProperty(reqField) !== true) {
+      inputErr.push('Missing required properties' + reqField)
     }
   })
   return inputErr
@@ -21,9 +21,9 @@ function checkReq(data, reqFields) {
 
 function checkGen(data, genFields) {
   var inputErr = []
-  genFields.forEach(function (genFields) {
-    if (genFields.hasOwnProperty(genFields) !== true) {
-      inputErr.push('Errors detected with' + genFields)
+  genFields.forEach(function (genField) {
+    if (data.hasOwnProperty(genField) !== true) {
+      inputErr.push('Errors detected with' + genField)
     }
   })
   return inputErr
@@ -34,8 +34,8 @@ function checkGen(data, genFields) {
 //////////////////////////////////////////////////////
 
 function checkAll(data, checkGen, checkReq) {
-  var reqErr = reqFields(data, reqFields)
-  var genErr = genFields(data, genFields)
+  var reqErr = checkReq(data, reqFields)
+  var genErr = checkGen(data, genFields)
   return reqErr.concat(genErr)
 }
 
