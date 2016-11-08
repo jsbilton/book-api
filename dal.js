@@ -41,9 +41,9 @@ function createBook(data, cb) {
   // check array
   if (inputErr.length)
     return cb(new Error('ADD BOOK ERROR'))
-    data.type = 'book'
-    data._id = data.type
 
+    data.type = 'book'
+    data._id = data.type + '_' + data.date_available
     db.put(data, helper.cbDB(cb))
 
 }
@@ -57,7 +57,7 @@ function getBookById(id, cb) {
   if (!id || !id.length || typeof id !== 'string') {
     return cb(new Error('GET BOOK ERROR:\n_id NOT STRING'))
   }
-  db.get(id, cbDB(cb))
+  db.get(id, helper.cbDB(cb))
 }
 
 ///////////////////////////////////////////////////////

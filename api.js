@@ -41,7 +41,7 @@ app.get('/books/:id', function (req, res, next) {
 
 // Revist this
 app.get('/books', function (req, res, next) {
-  const sortBy = 'book/'
+  const sortBy = 'books/name'
   const limit = req.query.limit || 3
   const startKey = ''
   dal.listBooks(sortBy, startKey, limit, helper.cbDAL(req, res, next))
