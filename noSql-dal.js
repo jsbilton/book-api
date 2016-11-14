@@ -74,13 +74,13 @@ function createBook(data, cb) {
 //////////////////     List Books        //////////////
 //////////////////////////////////////////////////////
 
-function listBooks(sortBy, startKey, limit, cb) {
-  if (typeof sortBy == 'undefined' || sortBy === null)   {
-    return cb(new Error('Missing startKey parameters:\nProvide startKey'))
-  }
-  if (startKey !== '') {
-    limit = limit + 1
-  }
+function listBooks(data, cb) {
+  // if (typeof sortBy == 'undefined' || sortBy === null)   {
+  //   return cb(new Error('Missing startKey parameters:\nProvide startKey'))
+  // }
+  // if (startKey !== '') {
+  //   limit = limit + 1
+  // }
   // if (typeof limit == 'undefined' || limit === 0) {
   //   return cb(new Error('Missing limit parameters:\nProvide limit'))
   // }
@@ -97,10 +97,10 @@ function listBooks(sortBy, startKey, limit, cb) {
         include_docs: true
     }, function(err, res) {
         if (err) return cb(err)
-        if (startKey !== '') {
-          res.rows.shift()
-        }
-        cb(null, res.rows)
+        // if (startKey !== '') {
+        //   res.rows.shift()
+        // }
+        if (res) cb(null, res.rows)
     })
 }
 

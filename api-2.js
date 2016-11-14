@@ -6,6 +6,7 @@ const dal = require('./noSql-dal.js')
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
+app.use(bodyParser.json())
 
 ///////////////////////////////////////////////////////
 //////////////////   Home          ///////////////////
