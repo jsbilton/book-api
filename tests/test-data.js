@@ -1,6 +1,8 @@
 const PouchDB = require('pouchdb-http')
-const dal = require('./noSql-dal.js')
+const dal = require('../noSql-dal.js')
 const db = new PouchDB('http://localhost:5984/book-api')
+
+console.log("functioning dal", dal)
 
 var ddoc = [{
   _id: '_design/books',
@@ -100,15 +102,15 @@ function cb(msgHeader) {
 books.forEach(function(book) {
   dal.createBook(book, cb('Book Created'))
 })
-
-
-db.bulkDocs(ddoc, function(err, data) {
-    if (err)
-        return console.log('ERROR CREATING DESIGN DOC FOR BOOK:\n', err.message)
-    if (data) {
-        console.log('DESIGN DOC CREATED FOR BOOK', data)
-    }
-})
-
-
-module.exports = books
+//
+//
+// db.bulkDocs(ddoc, function(err, data) {
+//     if (err)
+//         return console.log('ERROR CREATING DESIGN DOC FOR BOOK:\n', err.message)
+//     if (data) {
+//         console.log('DESIGN DOC CREATED FOR BOOK', data)
+//     }
+// })
+//
+//
+// module.exports = books

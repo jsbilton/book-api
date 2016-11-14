@@ -2,7 +2,7 @@ const express = require('express')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 8080
 const app = express()
-const dal = require('./noSql-dal.js')
+const dal = require('../noSql-dal.js')
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
