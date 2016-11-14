@@ -1,4 +1,4 @@
-// const dal = require('../dal-2.js')
+// const dal = require('../noSql-dal.js')
 // var importData = require('./data.js') // requiring in the JSON ball
 //
 //

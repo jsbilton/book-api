@@ -2,6 +2,7 @@ const PouchDB = require('pouchdb-http')
 PouchDB.plugin(require('pouchdb-mapreduce'))
 const db = new PouchDB('http://localhost:5984/book-api')
 
+
 var dal = {
   createView: createView,
   createBook: createBook,
@@ -86,13 +87,13 @@ function listBooks(sortBy, startKey, limit, cb) {
   // if the starKey isnt a string then incrememt limit
   // limit = startKey !== '' ? ++limit : limit
 
-  console.log('sortBy', sortBy)
-  console.log('startKey', startKey)
-  console.log('limit', limit)
+  // console.log('sortBy', sortBy)
+  // console.log('startKey', startKey)
+  // console.log('limit', limit)
 
-  db.query(sortBy, {
-        startKey: startKey,
-        limit: limit,
+  db.allDocs({
+        // startKey: startKey,
+        // limit: limit,
         include_docs: true
     }, function(err, res) {
         if (err) return cb(err)

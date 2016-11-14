@@ -97,7 +97,7 @@ function cb(msgHeader) {
   }
 }
 
-books.forEach(function (book) {
+books.forEach(function(book) {
   dal.createBook(book, cb('Book Created'))
 })
 
@@ -109,3 +109,6 @@ db.bulkDocs(ddoc, function(err, data) {
         console.log('DESIGN DOC CREATED FOR BOOK', data)
     }
 })
+
+
+module.exports = books

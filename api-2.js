@@ -95,12 +95,9 @@ app.get('books/:id', function (req, res, next) {
 //////////////////////////////////////////////////////
 
 app.get('/books', function (req, res, next) {
-  const sortByParam = req.query.sortBy || 'books'
-  const sortBy = sortByParam
-  const sortToken = req.query.sorttoken || ''
-  const limit = req.query.limit || 3
 
-  dal.listBooks(sortBy, sortToken, limit, function cb(err, data) {
+    dal.listBooks(req.body, function (err, data) {
+
       if (err) {
         var responseError = BuildResponseError(err)
         return next(new HTTPError(responseError.status, responseError.message, responseError))
