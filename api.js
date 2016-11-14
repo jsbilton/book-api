@@ -1,11 +1,11 @@
-const express = require('express')
-const HTTPError = require('node-http-error')
-const port = process.env.PORT || 8080
-const app = express()
-const dal = require('./dal.js')
-const bodyParser = require('body-parser')
-const jsonParser = bodyParser.json()
-const helper = require('./helpme-functions.js')
+// const express = require('express')
+// const HTTPError = require('node-http-error')
+// const port = process.env.PORT || 8080
+// const app = express()
+// const dal = require('./dal.js')
+// const bodyParser = require('body-parser')
+// const jsonParser = bodyParser.json()
+// const helper = require('./helpme-functions.js')
 
 ///////////////////////////////////////////////////////
 //////////////////   Helper        ///////////////////

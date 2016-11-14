@@ -9,7 +9,7 @@ function checkReq(data, reqFields) {
   //iterate thru input fields
   reqFields.forEach(function (reqField) {
     if (data.hasOwnProperty(reqField) !== true) {
-      inputErr.push('Missing required properties' + reqField)
+      inputErr.push('Missing required properties ' + reqField + ' in the data!')
     }
   })
   return inputErr
@@ -22,8 +22,8 @@ function checkReq(data, reqFields) {
 function checkGen(data, genFields) {
   var inputErr = []
   genFields.forEach(function (genField) {
-    if (data.hasOwnProperty(genField) !== true) {
-      inputErr.push('Errors detected with' + genField)
+    if (data.hasOwnProperty(genField) === true) {
+      inputErr.push('Errors detected with' + genField + ' in the data!')
     }
   })
   return inputErr
@@ -56,7 +56,7 @@ function cbDB(cb) {
 //////////////////////////////////////////////////////
 
 function cbDAL(req, res, next) {
-  return function (err, res) {
+  return function (err, response) {
     if (err) {
       return next(new HTTPError(400, err.message, {
         method: req.method,
@@ -64,10 +64,15 @@ function cbDAL(req, res, next) {
         query: req.query
       }))
     }
-    console.log('Method: ', req.method, '\nPath: ', req.path, '\nQuery: ', req.query, '\nRes: ', JSON.stringify(res, null, 4))
-    res.send(res)
+    console.log(
+      'Method: ',
+      req.method, '\nPath: ',
+      req.path, '\nQuery: ',
+      req.query, '\nRes: ', JSON.stringify(res, null, 4))
+    res.send(response)
   }
 }
+
 
 module.exports = {
   cbDAL: cbDAL,
