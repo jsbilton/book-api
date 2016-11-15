@@ -1,6 +1,7 @@
 const PouchDB = require('pouchdb-http')
 PouchDB.plugin(require('pouchdb-mapreduce'))
 const db = new PouchDB('http://localhost:5984/book-api')
+const path = require('path')
 
 
 var dal = {
@@ -45,29 +46,30 @@ function getBook(bookId, cb) {
 //////////////////////////////////////////////////////
 
 function createBook(data, cb) {
-  if (typeof data == 'undefined' || data === null) {
-    return cb (new Error('400MISSING:\nDATA required to create book'))
-  } else if (data.hasOwnProperty('_id') === true) {
-      return cb (new Error('400UNNECESSARY:\nID forbidden field'))
-  } else if (data.hasOwnProperty('_rev') === true) {
-      return cb (new Error('400UNNECESSARY:\nREV forbidden field'))
-  } else if (data.hasOwnProperty('name') !== true) {
-      return cb (new Error('400MISSING:\nNAME required to create book'))
-  } else if (data.hasOwnProperty('author') !== true) {
-      return cb (new Error('400MISSING:\nAUTHOR required to create book'))
-  } else if (data.hasOwnProperty('date_available')!== true) {
-      return cb(new Error('400MISSING:\nDATE AVAILABLE required to create book' ))
-  } else {
-    // assigning defaults
-    data.type = 'book'
-    data._id = 'book_' + data.author + data.name
-    data.active = true
+    if (typeof data == 'undefined' || data === null) {
+      return cb (new Error('400MISSING:\nDATA required to create book'))
+    } else if (data.hasOwnProperty('_id') === true) {
+        return cb (new Error('400UNNECESSARY:\nID forbidden field'))
+    } else if (data.hasOwnProperty('_rev') === true) {
+        return cb (new Error('400UNNECESSARY:\nREV forbidden field'))
+    } else if (data.hasOwnProperty('name') !== true) {
+        return cb (new Error('400MISSING:\nNAME required to create book'))
+    } else if (data.hasOwnProperty('author') !== true) {
+        return cb (new Error('400MISSING:\nAUTHOR required to create book'))
+    } else if (data.hasOwnProperty('date_available') !== true) {
+        return cb(new Error('400MISSING:\nDATE AVAILABLE required to create book' ))
+    } else {
 
-    db.put(data, function (err, res) {
-      if (err) return cb(err)
-      if(data) return cb(null, res)
-    })
-  }
+        // assigning defaults
+        data.type = 'book'
+        data._id = 'book_' + data.author + data.name
+        data.active = true
+
+        db.put(data, function (err, res) {
+          if (err) return cb(err)
+          if (data) return cb(null, res)
+        })
+    }
 
 }
 ///////////////////////////////////////////////////////
@@ -141,7 +143,7 @@ function deleteBook(data, cb) {
 
     db.remove(data, function (err, res) {
       if (err) return cb(err)
-      if(res) return cb(null, res)
+      if (res) return cb(null, res)
     })
   }
 }

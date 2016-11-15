@@ -2,9 +2,11 @@ const express = require('express')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 8080
 const app = express()
-const dal = require('../noSql-dal.js')
+const dal = require('./noSql-dal.js')
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
+
+// console.log("functioning dal", dal)
 
 app.use(bodyParser.json())
 
@@ -53,14 +55,14 @@ function BuildResponseError(err) {
 //////////////////////////////////////////////////////
 
 app.post('/books', function (req, res, next) {
-    console.log(req.body)
+    console.log("#1 req.body: ", req.body)
 
     dal.createBook(req.body, function (err, createdBook) {
       if (err) {
         var responseError = BuildResponseError(err)
         return next(new HTTPError(responseError.status, responseError.message, responseError))
       }
-      if(createdBook) {
+      if (createdBook) {
         console.log("POST" + req.path, createdBook)
         res.append("Content-type", "application/json")
         res.status(201).send(createdBook)
@@ -73,7 +75,7 @@ app.post('/books', function (req, res, next) {
 //////////////////////////////////////////////////////
 
 app.get('books/:id', function (req, res, next) {
-  console.log(req.body)
+  console.log("#2 req.body: ", req.body)
 
     const bookId = req.params.id
 
@@ -96,8 +98,10 @@ app.get('books/:id', function (req, res, next) {
 //////////////////////////////////////////////////////
 
 app.get('/books', function (req, res, next) {
+  // console.log("#3 req.body")
 
     dal.listBooks(req.body, function (err, data) {
+
 
       if (err) {
         var responseError = BuildResponseError(err)
@@ -116,7 +120,7 @@ app.get('/books', function (req, res, next) {
 //////////////////////////////////////////////////////
 
 app.put('/books/:id', function (req, res, next) {
-  console.log(req.body)
+  console.log("#4 req.body: ", req.body)
 
     dal.updateBook(req.body, function (err, data) {
         if (err) {
@@ -137,10 +141,11 @@ app.put('/books/:id', function (req, res, next) {
 //////////////////////////////////////////////////////
 
 app.delete('/books/:id', function(req, res, next) {
-  console.log(req.body)
+  console.log("#5 req.body: ", req.body)
 
     const personId = req.params.id
     dal.getBook(personId, function cb(err, data) {
+
         if (err) {
             var responseError = BuildResponseError(err)
             return next(new HTTPError(responseError.status, responseError.message, responseError))
