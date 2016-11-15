@@ -14,35 +14,35 @@ var dal = {
 }
 
 function createView(ddoc, cb) {
-  if (typeof ddoc == 'undefined' || ddoc === null) {
-    return cb(new Error('400MISSING DESIGN DOCUMENT'))
-  } else {
+    if (typeof ddoc == 'undefined' || ddoc === null) {
+      return cb(new Error('400MISSING DESIGN DOCUMENT'))
+    } else {
 
-    db.put(ddoc, function (err, res) {
-      if (err) return cb(err)
-      if (res) return cb(null, res)
-    })
-  }
+      db.put(ddoc, function (err, res) {
+        if (err) return cb(err)
+        if (res) return cb(null, res)
+      })
+    }
 }
 
 ///////////////////////////////////////////////////////
-//////////////////  GET Book         /////////////////
+//////////////////      GET Book     /////////////////
 //////////////////////////////////////////////////////
 
 function getBook(bookId, cb) {
-  if (typeof bookId == 'undefined' || bookId === null) {
-    return cb(new Error('400MISSING ID PARAMETER'))
-  } else {
+    if (typeof bookId == 'undefined' || bookId === null) {
+      return cb(new Error('400MISSING ID PARAMETER'))
+    } else {
 
-    db.get(bookId, function (err, res) {
-      if (err) return cb(err)
-      if (data) return cb(null, res)
-    })
-  }
+      db.get(bookId, function (err, res) {
+        if (err) return cb(err)
+        if (data) return cb(null, res)
+      })
+    }
 }
 
 ///////////////////////////////////////////////////////
-//////////////////   Add a Book       /////////////////
+//////////////////     Add a Book     /////////////////
 //////////////////////////////////////////////////////
 
 function createBook(data, cb) {
@@ -73,79 +73,78 @@ function createBook(data, cb) {
 
 }
 ///////////////////////////////////////////////////////
-//////////////////     List Books        //////////////
+//////////////////        List Books     //////////////
 //////////////////////////////////////////////////////
 
 function listBooks(data, cb) {
-  // if (typeof sortBy == 'undefined' || sortBy === null)   {
-  //   return cb(new Error('Missing startKey parameters:\nProvide startKey'))
-  // }
-  // if (startKey !== '') {
-  //   limit = limit + 1
-  // }
-  // if (typeof limit == 'undefined' || limit === 0) {
-  //   return cb(new Error('Missing limit parameters:\nProvide limit'))
-  // }
-  // if the starKey isnt a string then incrememt limit
-  // limit = startKey !== '' ? ++limit : limit
+    // if (typeof sortBy == 'undefined' || sortBy === null)   {
+    //   return cb(new Error('Missing startKey parameters:\nProvide startKey'))
+    // }
+    // if (startKey !== '') {
+    //   limit = limit + 1
+    // }
+    // if (typeof limit == 'undefined' || limit === 0) {
+    //   return cb(new Error('Missing limit parameters:\nProvide limit'))
+    // }
+    // if the starKey isnt a string then incrememt limit
+    // limit = startKey !== '' ? ++limit : limit
+    //
+    // console.log('sortBy', sortBy)
+    // console.log('startKey', startKey)
+    // console.log('limit', limit)
 
-  // console.log('sortBy', sortBy)
-  // console.log('startKey', startKey)
-  // console.log('limit', limit)
+      db.allDocs({
+            startKey: 'book'
+        }, function(err, res) {
+            if (err) return cb(err)
+            if (res) cb(null, res.rows)
+        })
 
-  db.allDocs({
-        // startKey: startKey,
-        // limit: limit,
-        include_docs: true
-    }, function(err, res) {
-        if (err) return cb(err)
-        // if (startKey !== '') {
-        //   res.rows.shift()
-        // }
-        if (res) cb(null, res.rows)
-    })
+      // db.get('doc', function (err, res) {
+      //       if (err) return cb(err)
+      //       if (res) cb(null, res.rows)
+      //       })
 }
-
 
 ///////////////////////////////////////////////////////
 //////////////////     Update Book       //////////////
 //////////////////////////////////////////////////////
 
 function updateBook(data, cb) {
-  // call to couch retrive doc with provided ID
-  if (typeof data == 'undefined' || data === null) {
-    return cb(new Error('400MISSING:\nDATA for update'))
-  } else if (data.hasOwnProperty('_id') !== true) {
-      return cb(new Error('400MISSING:\nID property from data'))
-  } else if (data.hasOwnProperty('_rev') !== true) {
-      return cb(new Error('400MISSING:\nREV property from data'))
-  } else {
+    // call to couch retrive doc with provided ID
+    if (typeof data == 'undefined' || data === null) {
+      return cb(new Error('400MISSING:\nDATA for update'))
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return cb(new Error('400MISSING:\nID property from data'))
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return cb(new Error('400MISSING:\nREV property from data'))
+    } else {
 
-    db.put(data, function (err, res) {
-      if (err) return cb(err)
-      if (res) return cb(null, res)
-    })
-  }
+      db.put(data, function (err, res) {
+        if (err) return cb(err)
+        if (res) return cb(null, res)
+      })
+    }
 }
 
 ///////////////////////////////////////////////////////
-//////////////////     Delete Book       //////////////
+//////////////////      Delete Book      //////////////
 //////////////////////////////////////////////////////
 
 function deleteBook(data, cb) {
-  if (typeof data == 'undefined' || data === null) {
-    return cb(new Error('400MISSING:\nDATA for book delete'))
-  } else if (data.hasOwnProperty('_id') !== true) {
-      return cb(new Error('400MISSING:\nID property from data'))
-  } else if (data.hasOwnProperty('_rev') !== true) {
-      return cb(new Error('400MISSING:\nREV property from data'))
-  } else {
+    if (typeof data == 'undefined' || data === null) {
+      return cb(new Error('400MISSING:\nDATA for book delete'))
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return cb(new Error('400MISSING:\nID property from data'))
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return cb(new Error('400MISSING:\nREV property from data'))
+    } else {
 
-    db.remove(data, function (err, res) {
-      if (err) return cb(err)
-      if (res) return cb(null, res)
-    })
-  }
+      db.remove(data, function (err, res) {
+        if (err) return cb(err)
+        if (res) return cb(null, res)
+      })
+    }
 }
 
 module.exports = dal

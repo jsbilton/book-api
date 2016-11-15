@@ -1,4 +1,7 @@
-// const createView = require('../dal-2.js').createView
+// const PouchDB = require('pouchdb-http')
+// const dal = require('../noSql-dal.js')
+// const db = new PouchDB('http://localhost:5984/book-api')
+//
 //
 // var ddoc = [{
 //   _id: '_design/books',
@@ -12,6 +15,8 @@
 //     }
 //   }
 // }]
+
+
 //
 // createView(ddoc, function(err, data) {
 //     if (err)
