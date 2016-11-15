@@ -143,23 +143,23 @@ app.put('/books/:id', function (req, res, next) {
 app.delete('/books/:id', function(req, res, next) {
   console.log("#5 req.body: ", req.body)
 
-    const personId = req.params.id
-    dal.getBook(personId, function cb(err, data) {
+    const bookId = req.params.id
+    dal.getBook(bookId, function cb(err, data) {
 
         if (err) {
             var responseError = BuildResponseError(err)
             return next(new HTTPError(responseError.status, responseError.message, responseError))
         }
         if (data) {
-            dal.deletePerson(data, function cb(deletedErr, deletedPerson) {
+            dal.deleteBook(data, function cb(deletedErr, deletedBook) {
                 if (deletedErr) {
-                    var responseError = BuildResponseError(deletedErr)
+                    var responseError = BuildResponseError(deletedBook)
                     return next(new HTTPError(responseError.status, responseError.message, responseError))
                 }
-                if (deletedPerson) {
-                    console.log("DELETE" + req.path, deletedPerson)
+                if (deletedBook) {
+                    console.log("DELETE" + req.path, deletedBook)
                     res.append("Content-type", "application/json")
-                    res.status(204).send(deletedPerson)
+                    res.status(204).send(deletedBook)
                 }
             })
         }
